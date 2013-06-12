@@ -2,17 +2,7 @@ class RootViewController < UIViewController
   def viewDidLoad
     super
 
-    
-    @containerView = UIView.alloc.init
-    self.view.addSubview @containerView
-
     startScreen
-    mainScreen    
-
-    get_json
-    #addNewView
-    @containerView.addSubview @startView
-
     performSelector("addNewView", withObject:nil ,afterDelay:1)
 
   end
@@ -24,83 +14,79 @@ class RootViewController < UIViewController
   end
   
   def loadRestaurants
-        App.alert("Loading Restaurants")
+    App.alert("Loading Restaurants")
   
   end
 
   def startScreen
-    @startView = UIView.alloc.initWithFrame( UIScreen.mainScreen.bounds )
-    @startView.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-intro-pq.jpg"))
-    
+    self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-intro-pq.jpg"))
   end
 
   def mainScreen
-    @launchView = UIView.alloc.initWithFrame( UIScreen.mainScreen.bounds )
-    @launchView.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-orange.jpg"))
-  
-    addLabelsToMainScreen    
+   
+  self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-orange.jpg"))
+  addLabelsToMainScreen    
 
   end
 
 
   def addLabelsToMainScreen
 
+    
+    #logo = UILabel.alloc.initWithFrame(CGRectMake(10,50,300,100))
+    #logo.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/logo.png")); 
+    #elf.view.addSubview logo
+
+   
+
     xPosition = 50
     yPosition = 100
     xImageSize = 80
     yImageSize = 120
-    
-    logo = UILabel.alloc.initWithFrame(CGRectMake(10,50,300,100))
-    logo.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/logo.png")); 
-    @launchView.addSubview logo
 
-    button = UIButton.buttonWithType(UIButtonTypeCustom)
+    button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition,yPosition,xImageSize,yImageSize)
     button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-cafes.png"),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadCafes', forControlEvents:UIControlEventTouchUpInside)
-
-    @launchView.addSubview button
-
-
+    button.setUserInteractionEnabled true
+    self.view.addSubview button
 
 
-    @button1 = UIButton.buttonWithType(UIButtonTypeCustom)
-    @button1.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition,xImageSize,yImageSize)
-    @button1.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-restaurants.png"),forState:UIControlStateNormal)
-    @button1.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
+    button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition,xImageSize,yImageSize)
+    button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-restaurants.png"),forState:UIControlStateNormal)
+    button.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
+    self.view.addSubview button
 
-    @launchView.addSubview @button1
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
     button.frame = CGRectMake(xPosition,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
-  #bug in the naming of the method
-  #  theimage = UIImage.imageNamed("interface_elements/bt-groceries.png",forState:UIControlStateNormal)
- #   theimage.userInteractionEnabled = true
-   # button.setBackgroundImage(theimage)
+    theimage = UIImage.imageNamed("interface_elements/bt-groceries.png")
+    button.setBackgroundImage(theimage,forState:UIControlStateNormal)
     button.addTarget(self, action:'loadGroceries', forControlEvents:UIControlEventTouchUpInside)
-    @launchView.addSubview button
+    self.view.addSubview button
 
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
     button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
     button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-recipes.png"),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadRecipes', forControlEvents:UIControlEventTouchUpInside)
+    self.view.addSubview button
 
-    @launchView.addSubview button
     
   end
 
   def addNewView
-    UIView.transitionWithView(@containerView,  duration:10.0,options: UIViewAnimationOptionCurveEaseOut |UIViewAnimationOptionAllowUserInteraction,animations: 
+    UIView.transitionWithView(@containerView,  duration:0.2,options: UIViewAnimationOptionTransitionFlipFromLeft |UIViewAnimationOptionAllowUserInteraction,animations: 
       lambda do ||
-          @startView.removeFromSuperview
-          @containerView.addSubview @launchView
-          @containerView.bringSubviewToFront @launchView
-
+        mainScreen         
       end,
-     completion:
+      completion:
       lambda do |notification|
-
+         #@containerView.addSubview @launchView
+          #@containerView.bringSubviewToFront @launchView
+        #@button1.setUserInteractionEnabled(true)
         
       end
 
