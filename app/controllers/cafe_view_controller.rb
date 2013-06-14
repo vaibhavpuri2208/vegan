@@ -9,11 +9,14 @@ class CafeTableViewController < UITableViewController
   end
 
   def setupTabItem
-    tab_bar_item = UITabBarItem.alloc.initWithTitle("cafés",image: UIImage.imageNamed('interface_elements/bt-cafes.png') , tag:1)
+    tab_bar_item = UITabBarItem.alloc.initWithTitle("cafés",image: loadImage "cafes" , tag:1)
     self.tabBarItem = tab_bar_item
     @data_all = UIApplication.sharedApplication.delegate.readJSON
     @cafe = @data_all["cafe"]
   end
+
+
+
 
   def tableView(tableView, numberOfRowsInSection:section)
     @cafe.length

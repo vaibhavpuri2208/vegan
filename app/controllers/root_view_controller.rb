@@ -32,12 +32,12 @@ class RootViewController < UIViewController
 
     xPosition = 50
     yPosition = 100
-    xImageSize = 80
-    yImageSize = 120
+    xImageSize = 90
+    yImageSize = 55
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition,yPosition,xImageSize,yImageSize)
-    button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-cafes.png"),forState:UIControlStateNormal)
+    button.setBackgroundImage (loadImage "cafes")
     button.addTarget(self, action:'loadCafes', forControlEvents:UIControlEventTouchUpInside)
     button.setUserInteractionEnabled true
     self.view.addSubview button
@@ -45,27 +45,36 @@ class RootViewController < UIViewController
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition,xImageSize,yImageSize)
-    button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-restaurants.png"),forState:UIControlStateNormal)
+    button.setBackgroundImage (loadImage "restaurants")
     button.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
 
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
     button.frame = CGRectMake(xPosition,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
-    theimage = UIImage.imageNamed("interface_elements/bt-groceries.png")
-    button.setBackgroundImage(theimage,forState:UIControlStateNormal)
+
+    button.setBackgroundImage (loadImage "groceries")
     button.addTarget(self, action:'loadGroceries', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
 
-=begin
-    button = UIButton.buttonWithType(UIButtonTypeCustom)
-    button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
-    button.setBackgroundImage (UIImage.imageNamed("interface_elements/bt-recipes.png"),forState:UIControlStateNormal)
-    button.addTarget(self, action:'loadRecipes', forControlEvents:UIControlEventTouchUpInside)
-    self.view.addSubview button
-=end
     
   end
+
+
+  def loadImage imageName 
+    imageNameNormal = "interface_elements/main_menu-icon-" + imageName +".png"
+    imageNameRetina = "interface_elements/main_menu-icon-" + imageName + "-2x.png"
+    if Device.retina?
+      theimage = UIImage.imageNamed(imageNameRetina)
+    else
+      theimage = UIImage.imageNamed(imageNameNormal)
+    end
+  
+    UIImage.imageNamed(theimage,forState:UIControlStateNormal)
+  end
+
+
+
 
   def addNewView
     UIView.transitionWithView(@containerView,  duration:0.2,options: UIViewAnimationOptionTransitionFlipFromLeft |UIViewAnimationOptionAllowUserInteraction,animations: 

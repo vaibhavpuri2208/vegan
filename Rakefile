@@ -12,5 +12,5 @@ Motion::Project::App.setup do |app|
   app.pods do
     dependency 'JSONKit'
   end
-
+  app.files = Dir.glob(File.join(app.project_dir, 'app/lib/**/*.rb'))| Dir.glob(File.join(app.project_dir,'app/**/*.rb'))
 end
