@@ -1,17 +1,17 @@
 
   {
   "cafe":[
-  {"name":"Café 1","description":"Description 1", "address":"Address 1"},
-  {"name":"Café 2","description":"Description 2", "address":"Address 2"},
-  {"name":"Café 3","description":"Description 3", "address":"Address 3"},
-  {"name":"Café 4","description":"Description 4", "address":"Address 4"},
-  {"name":"Café 5","description":"Description 5", "address":"Address 5"},
-  {"name":"Café 6","description":"Description 6", "address":"Address 6"},
-  {"name":"Café 7","description":"Description 7", "address":"Address 7"},
-  {"name":"Café 8","description":"Description 8", "address":"Address 8"},
-  {"name":"Café 9","description":"Description 9", "address":"Address 9"},
-  {"name":"Café 10","description":"Description 10", "address":"Address 10"},
-    {"name":"Café 10","description":"Description 10", "address":"Address 10"}
+  {"name":"Café 1","description":"Description 1", "address":"Tschaikowskistraße 13,Berlin 13156"},
+  {"name":"Café 2","description":"Description 2", "address":"Corazón de Maria 4, Madrid, España"},
+  {"name":"Café 3","description":"Description 3", "address":"Madrid"},
+  {"name":"Café 4","description":"Description 4", "address":"Stoclkholm"},
+  {"name":"Café 5","description":"Description 5", "address":"Singapore"},
+  {"name":"Café 6","description":"Description 6", "address":"Mumbai"},
+  {"name":"Café 7","description":"Description 7", "address":"New Delhi"},
+  {"name":"Café 8","description":"Description 8", "address":"San Francisco"},
+  {"name":"Café 9","description":"Description 9", "address":"Boston"},
+  {"name":"Café 10","description":"Description 10", "address":"Sao Paulo"},
+    {"name":"Café 10","description":"Description 10", "address":"Buenos Aires"}
   ],
   "restaurants":[
   {"name":"Restaurant 1","description":"Decription 1", "address":"Address 1"},

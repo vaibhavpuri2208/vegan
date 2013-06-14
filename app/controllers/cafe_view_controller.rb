@@ -34,13 +34,8 @@ class CafeTableViewController < UITableViewController
     p "row #{indexPath.row} selected"
     cafe_selected = @cafe[indexPath.row]
 
-    @cafe_detail_controller = CafeDetailViewController.alloc.initWithData cafe_selected
+    @cafe_detail_controller = self.initWithData cafe_selected
     self.navigationController.pushViewController(@cafe_detail_controller, animated:true)
-    @cafe_detail_controller.buildView
-
-
-
-
 
   end
 
@@ -57,7 +52,14 @@ class CafeTableViewController < UITableViewController
     64.0
   end
 
-
+   def initWithData data
+    cafe_detail_controller = CafeDetailViewController.alloc.init
+    cafe_detail_controller.name = data[:name]
+    cafe_detail_controller.description = data[:description]
+    cafe_detail_controller.address = data[:address]
+    cafe_detail_controller.buildView 
+    cafe_detail_controller  
+  end
 
 end
 
