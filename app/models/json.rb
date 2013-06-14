@@ -1,9 +1,10 @@
 class Data
 
-  def init(name, description:description, address:address)
+  def init(name, description:description, address:address,phone:phone)
     @name = name
     @description = description
     @address = address
+    @phone = phone
   end
 
   def name
@@ -17,6 +18,10 @@ class Data
 
   def address
     @address
+  end
+
+  def phone
+    @phone
   end
 
 end

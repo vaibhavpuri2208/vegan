@@ -54,24 +54,25 @@ class CafeTableViewController < UITableViewController
 
   end
 
-
+=begin  
   def tableView(tableView, viewForHeaderInSection:section)
 
-    header_view = UIImageView.alloc.initWithImage(UIImage.imageNamed("interface_elements/bg-orange.jpg"))
-    header_view.frame = [[0,0], [320, 44]]
-    header_view.setUserInteractionEnabled(true)
-    header_view
+    #   header_view = UIImageView.alloc.initWithImage(UIImage.imageNamed("interface_elements/bg-orange.jpg"))
+    #   header_view.frame = [[0,0], [320, 44]]
+    #   header_view.setUserInteractionEnabled(true)
+    #   header_view
   end
 
   def tableView(tableView, heightForHeaderInSection:section)
-    64.0
+   # 64.0
   end
-
+=end
    def initWithData data
     cafe_detail_controller = CafeDetailViewController.alloc.init
     cafe_detail_controller.name = data[:name]
     cafe_detail_controller.description = data[:description]
     cafe_detail_controller.address = data[:address]
+    cafe_detail_controller.phone = data[:phone]
     cafe_detail_controller.buildView 
     cafe_detail_controller  
   end

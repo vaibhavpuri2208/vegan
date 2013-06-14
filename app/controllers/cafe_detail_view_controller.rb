@@ -1,24 +1,31 @@
 class CafeDetailViewController < UIViewController
 
-  attr_accessor :name, :description, :address
+  attr_accessor :name, :description, :address, :phone
 
   X_LEFT_POSITION = 25
   Y_FIRST_POSITION = 10
 
   X_INCREMENT = 20
-  Y_INCREMENT = 50
+  Y_INCREMENT = 40
   
 
   def buildView
     #leackage in instance variable.
     self.view.backgroundColor = UIColor.whiteColor
   
-    labelField = drawLabel X_LEFT_POSITION, Y_FIRST_POSITION, "Name"
-    self.view.addSubview labelField
+   # labelField = drawLabel X_LEFT_POSITION, Y_FIRST_POSITION, "Name"
+   # self.view.addSubview labelField
   
-    textField = drawText X_LEFT_POSITION, Y_FIRST_POSITION+Y_INCREMENT, :name
+    textField = drawText X_LEFT_POSITION, Y_FIRST_POSITION, :name
     self.view.addSubview textField
   
+    textField = drawText X_LEFT_POSITION, Y_FIRST_POSITION+Y_INCREMENT, :address
+    self.view.addSubview textField
+
+
+    textField = drawText X_LEFT_POSITION, Y_FIRST_POSITION+Y_INCREMENT*7, :phone
+    self.view.addSubview textField
+
     @map_view_for_location = self.initMap
     self.drawMap
     self.view.addSubview @map_view_for_location
@@ -39,17 +46,17 @@ class CafeDetailViewController < UIViewController
 
 
   def drawText xPosition, yPosition, attribute_name
-    dataLabelField = UILabel.alloc.initWithFrame(CGRectMake(xPosition,yPosition, 170, 30))
+    dataLabelField = UILabel.alloc.initWithFrame(CGRectMake(xPosition,yPosition, UIScreen.mainScreen.bounds.size.width, 30))
     dataLabelField.backgroundColor = UIColor.clearColor
     dataLabelField.textColor = UIColor.blackColor
-    dataLabelField.font = UIFont.systemFontOfSize(15)
+    dataLabelField.font = UIFont.systemFontOfSize(17)
     dataLabelField.text = self.send(attribute_name)
     dataLabelField
   end
 
 
   def initMap 
-     map_view = MKMapView.alloc.initWithFrame([[X_LEFT_POSITION,Y_FIRST_POSITION+Y_INCREMENT*2], [250, Y_FIRST_POSITION+Y_INCREMENT*4]])
+     map_view = MKMapView.alloc.initWithFrame([[X_LEFT_POSITION,Y_FIRST_POSITION+Y_INCREMENT*2.5], [250, Y_FIRST_POSITION+Y_INCREMENT*4]])
      map_view.mapType = MKMapTypeStandard
      map_view 
   end

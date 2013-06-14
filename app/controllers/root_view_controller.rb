@@ -19,7 +19,8 @@ class RootViewController < UIViewController
 
   def mainScreen
    
-   self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-orange.jpg"))
+   self.view.backgroundColor = UIColor.colorWithRed(255.0/255.0, green:203.0/255.0, blue:64.0/255.0, alpha:0.9)
+   #colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-all.png"))
     addLabelsToMainScreen    
 
   end
@@ -34,8 +35,8 @@ class RootViewController < UIViewController
 
    
 
-    xPosition = 50
-    yPosition = 100
+    xPosition = 40
+    yPosition = 120
     xImageSize = 90
     yImageSize = 55
 
@@ -49,7 +50,7 @@ class RootViewController < UIViewController
 
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
-    button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition,xImageSize,yImageSize)
+    button.frame = CGRectMake(xPosition*2+xImageSize*1.25,yPosition,xImageSize,yImageSize)
     theimage=loadImageWithState('restaurants')
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
@@ -57,7 +58,7 @@ class RootViewController < UIViewController
 
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
-    button.frame = CGRectMake(xPosition,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
+    button.frame = CGRectMake(xPosition,yPosition*1.4+yImageSize*1.2,xImageSize,yImageSize)
     theimage=loadImageWithState('groceries')
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadGroceries', forControlEvents:UIControlEventTouchUpInside)
