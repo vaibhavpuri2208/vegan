@@ -9,13 +9,25 @@ class CafeTableViewController < UITableViewController
   end
 
   def setupTabItem
-    tab_bar_item = UITabBarItem.alloc.initWithTitle("cafés",image: loadImage "cafes" , tag:1)
+    theimage = loadImage("cafe")
+    tab_bar_item = UITabBarItem.alloc.initWithTitle(nil,image:UIImage.imageNamed(theimage),tag:1)
     self.tabBarItem = tab_bar_item
     @data_all = UIApplication.sharedApplication.delegate.readJSON
     @cafe = @data_all["cafe"]
   end
 
 
+
+  def loadImage imageName 
+    imageNameNormal = "interface_elements/menu_bar-icon-" + imageName +".png"
+    imageNameRetina = "interface_elements/menu_bar-icon-" + imageName + "-2x.png"
+    if BW::Device.retina?
+     theimage = imageNameRetina
+    else
+      theimage = imageNameNormal
+    end
+    theimage
+  end
 
 
   def tableView(tableView, numberOfRowsInSection:section)

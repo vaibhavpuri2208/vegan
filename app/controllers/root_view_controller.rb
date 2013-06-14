@@ -10,7 +10,11 @@ class RootViewController < UIViewController
 
   def startScreen
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
-    self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-intro-pq.jpg"))
+    if BW::Device.retina?
+      self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-intro-2x.png"))
+    else
+      self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-intro.png"))
+    end
   end
 
   def mainScreen
@@ -37,7 +41,8 @@ class RootViewController < UIViewController
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition,yPosition,xImageSize,yImageSize)
-    button.setBackgroundImage (loadImage "cafes")
+    theimage=loadImageWithState('cafes')
+    button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadCafes', forControlEvents:UIControlEventTouchUpInside)
     button.setUserInteractionEnabled true
     self.view.addSubview button
@@ -45,32 +50,32 @@ class RootViewController < UIViewController
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition*2+xImageSize*1.2,yPosition,xImageSize,yImageSize)
-    button.setBackgroundImage (loadImage "restaurants")
+    theimage=loadImageWithState('restaurants')
+    button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
 
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
     button.frame = CGRectMake(xPosition,yPosition*1.2+yImageSize*1.2,xImageSize,yImageSize)
-
-    button.setBackgroundImage (loadImage "groceries")
+    theimage=loadImageWithState('groceries')
+    button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadGroceries', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
 
     
   end
 
-
-  def loadImage imageName 
+    
+  def loadImageWithState imageName 
     imageNameNormal = "interface_elements/main_menu-icon-" + imageName +".png"
     imageNameRetina = "interface_elements/main_menu-icon-" + imageName + "-2x.png"
-    if Device.retina?
-      theimage = UIImage.imageNamed(imageNameRetina)
+    if BW::Device.retina?
+      theimage = imageNameRetina
     else
-      theimage = UIImage.imageNamed(imageNameNormal)
+      theimage = imageNameNormal
     end
-  
-    UIImage.imageNamed(theimage,forState:UIControlStateNormal)
+    theimage
   end
 
 

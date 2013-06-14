@@ -9,8 +9,9 @@ Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'veganApp'
   app.frameworks = ['CoreLocation', 'MapKit']  
+ 
   app.pods do
     dependency 'JSONKit'
+
   end
-  app.files = Dir.glob(File.join(app.project_dir, 'app/lib/**/*.rb'))| Dir.glob(File.join(app.project_dir,'app/**/*.rb'))
 end
