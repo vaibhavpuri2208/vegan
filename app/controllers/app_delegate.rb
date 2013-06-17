@@ -1,27 +1,20 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-   
-
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     @window.rootViewController = RootViewController.alloc.init
     @window.makeKeyAndVisible
-
-
     true
   end
 
 
-
   def appTabBarController tabIndex
     cafe_navigation_controller = UINavigationController.alloc.initWithRootViewController(CafeTableViewController.alloc.initWithStyle(UITableViewStylePlain))
-
     tab_bar_controller = UITabBarController.alloc.init
     tab_bar_controller.viewControllers = [ cafe_navigation_controller, RestaurantTableViewController.alloc.init,
-      GroceryTableViewController.alloc.init]
-     #tab_bar_controller.tabBar.backgroundImage = UIImage.imageNamed "interface_elements/bg-orange.jpg"
-     tab_bar_controller.selectedIndex = tabIndex 
-
-     @window.rootViewController = tab_bar_controller
+    GroceryTableViewController.alloc.init]
+    #tab_bar_controller.tabBar.backgroundImage = UIImage.imageNamed "interface_elements/bg-orange.jpg"
+    tab_bar_controller.selectedIndex = tabIndex 
+    @window.rootViewController = tab_bar_controller
   end
 
 
