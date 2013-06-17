@@ -1,10 +1,11 @@
+
 class CafeDetailViewController < UIViewController
 
   attr_accessor :name, :description, :address, :phone
 
   class << self
 
-    attr_accessor :Y_INCREMENT, :X_INCREMENT, :X_LEFT_POSITION, :Y_FIRST_POSITION
+    attr_accessor :Y_INCREMENT, :X_INCREMENT, :X_LEFT_POSITION, :Y_FIRST_POSITION, :LABEL_HEIGHT, :MAP_HEIGHT
 
   end
   
@@ -17,52 +18,85 @@ class CafeDetailViewController < UIViewController
     end  
       self.class.X_INCREMENT = 40
       self.class.X_LEFT_POSITION = 25
-      self.class.Y_FIRST_POSITION =10
+      self.class.Y_FIRST_POSITION =0
+      self.class.LABEL_HEIGHT = 50
+      self.class.MAP_HEIGHT = 100
   end
 
   def buildView
     setGrid
     self.view.backgroundColor = UIColor.whiteColor
-  
-    textField = drawText self.class.X_LEFT_POSITION, self.class.Y_FIRST_POSITION, :name
-    self.view.addSubview textField
-  
-    textField = drawText self.class.X_LEFT_POSITION, self.class.Y_FIRST_POSITION + self.class.Y_INCREMENT, :address
+
+
+    yCordinate = self.class.Y_FIRST_POSITION  
+    backgroundView = drawBackground yCordinate, true
+    self.view.addSubview backgroundView
+    textField = drawText self.class.X_LEFT_POSITION,yCordinate, :name, "AvenirNext-Bold", 16.0
     self.view.addSubview textField
 
-    @map_view_for_location = self.initMap
+
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT
+    backgroundView = drawBackground yCordinate, false 
+    self.view.addSubview backgroundView
+    textField = drawText self.class.X_LEFT_POSITION, yCordinate, :address, "Avenir-Book", 16.0
+    self.view.addSubview textField
+
+
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT
+
+    @map_view_for_location = self.initMap yCordinate
     self.regionForMap
     self.view.addSubview @map_view_for_location
 
-    textField = drawText self.class.X_LEFT_POSITION, self.class.Y_FIRST_POSITION+self.class.Y_INCREMENT*10, :phone
+
+    yCordinate = yCordinate*2 + self.class.MAP_HEIGHT 
+    backgroundView = drawBackground yCordinate, false
+    self.view.addSubview backgroundView
+    textField = drawText self.class.X_LEFT_POSITION,yCordinate, :phone, "Avenir-Book", 16.0
     self.view.addSubview textField
 
 
   end
 
 
-  def drawLabel xPosition, yPosition, label_name 
-    labelField = UILabel.alloc.initWithFrame(CGRectMake(xPosition,yPosition,200,50))
-    labelField.backgroundColor = UIColor.clearColor
-    labelField.text = label_name
-    labelField.textColor = UIColor.blackColor
-    labelField
-  end
-
-
-  def drawText xPosition, yPosition, attribute_name
-    dataLabelField = UILabel.alloc.initWithFrame(CGRectMake(xPosition,yPosition, UIScreen.mainScreen.bounds.size.width, 30))
+  def drawText xPosition, yPosition, attribute_name, fontName, fontSize
+    dataLabelField = UILabel.alloc.initWithFrame(CGRectMake(xPosition,yPosition+10, UIScreen.mainScreen.bounds.size.width-xPosition, self.class.LABEL_HEIGHT/2))
     dataLabelField.backgroundColor = UIColor.clearColor
-    dataLabelField.textColor = UIColor.blackColor
-    dataLabelField.font = UIFont.systemFontOfSize(17)
+    dataLabelField.textColor = UIColor.colorWithRed(119.0/255.0, green:93.0/255.0, blue:70.0/255.0, alpha:1.0)
+    dataLabelField.font = UIFont.fontWithName(fontName, size:fontSize)
+    dataLabelField.adjustsFontSizeToFitWidth = true
     dataLabelField.text = self.send(attribute_name)
     dataLabelField
+
+  end
+
+  def drawBackground yPosition, borderBOOL
+    surroundingLayer = UILabel.alloc.initWithFrame(CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+2, self.class.LABEL_HEIGHT))
+    surroundingLayer.backgroundColor = UIColor.colorWithRed(255.0/255.0, green:246.0/255.0, blue:235.0/255.0, alpha:0.5)
+    if borderBOOL
+      surroundingLayer.layer.borderColor = UIColor.brownColor.CGColor
+    else
+      surroundingLayer.layer.borderColor = UIColor.clearColor.CGColor
+    end
+
+    surroundingLayer.layer.borderWidth =1.0
+    surroundingLayer
+
+    surroundingLayer
+
+  end
+
+  def setMyFont fontName, fontSize
+
+
+
   end
 
 
-  def initMap 
-     map_view = MKMapView.alloc.initWithFrame([[self.class.X_LEFT_POSITION,self.class.Y_FIRST_POSITION+self.class.Y_INCREMENT*3], [self.class.X_LEFT_POSITION+self.class.X_INCREMENT*6, self.class.Y_FIRST_POSITION+self.class.Y_INCREMENT*6]])
+  def initMap yCordinate
+     map_view = MKMapView.alloc.initWithFrame([[0,yCordinate], [UIScreen.mainScreen.bounds.size.width, yCordinate +self.class.MAP_HEIGHT]])
      map_view.mapType = MKMapTypeStandard
+     map_view.backgroundColor = UIColor.colorWithRed(244.0/255.0, green:214.0/255.0, blue:188.0/255.0, alpha:1.0)
      map_view 
   end
 
