@@ -19,8 +19,7 @@ class RootViewController < UIViewController
 
   def mainScreen
    
-   self.view.backgroundColor = UIColor.colorWithRed(255.0/255.0, green:203.0/255.0, blue:64.0/255.0, alpha:0.9)
-   #colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-all.png"))
+    self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-main-menu.png"))
     addLabelsToMainScreen    
 
   end
@@ -36,7 +35,7 @@ class RootViewController < UIViewController
    
 
     xPosition = 40
-    yPosition = 120
+    yPosition = 180
     xImageSize = 90
     yImageSize = 55
 

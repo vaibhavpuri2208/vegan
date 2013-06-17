@@ -20,40 +20,50 @@ class CafeDetailViewController < UIViewController
       self.class.X_LEFT_POSITION = 25
       self.class.Y_FIRST_POSITION =0
       self.class.LABEL_HEIGHT = 50
-      self.class.MAP_HEIGHT = 100
+      self.class.MAP_HEIGHT = 75
   end
 
   def buildView
     setGrid
     self.view.backgroundColor = UIColor.whiteColor
-
-
+    
+    myScrollView = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    myScrollView.contentSize =  CGSizeMake(328,758)
+    self.view.addSubview myScrollView 
+    
     yCordinate = self.class.Y_FIRST_POSITION  
     backgroundView = drawBackground yCordinate, true
-    self.view.addSubview backgroundView
+    myScrollView.addSubview backgroundView
     textField = drawText self.class.X_LEFT_POSITION,yCordinate, :name, "AvenirNext-Bold", 16.0
-    self.view.addSubview textField
+    myScrollView.addSubview textField
+
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT
+    backgroundView = drawBackground yCordinate, false
+    myScrollView.addSubview backgroundView
+    textField = drawText self.class.X_LEFT_POSITION, yCordinate, :description, "Avenir-Book", 16.0
+    myScrollView.addSubview textField
+
 
 
     yCordinate = yCordinate + self.class.LABEL_HEIGHT
-    backgroundView = drawBackground yCordinate, false 
-    self.view.addSubview backgroundView
+    backgroundView = drawBackground yCordinate, true 
+    myScrollView.addSubview backgroundView
     textField = drawText self.class.X_LEFT_POSITION, yCordinate, :address, "Avenir-Book", 16.0
-    self.view.addSubview textField
+    myScrollView.addSubview textField
 
 
     yCordinate = yCordinate + self.class.LABEL_HEIGHT
 
     @map_view_for_location = self.initMap yCordinate
     self.regionForMap
-    self.view.addSubview @map_view_for_location
+    myScrollView.addSubview @map_view_for_location
 
 
     yCordinate = yCordinate*2 + self.class.MAP_HEIGHT 
     backgroundView = drawBackground yCordinate, false
-    self.view.addSubview backgroundView
+    myScrollView.addSubview backgroundView
     textField = drawText self.class.X_LEFT_POSITION,yCordinate, :phone, "Avenir-Book", 16.0
-    self.view.addSubview textField
+    myScrollView.addSubview textField
 
 
   end
