@@ -9,7 +9,8 @@ Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'veganApp'
   app.frameworks = ['CoreLocation', 'MapKit','QuartzCore']  
-  
+  app.info_plist['UIAppFonts'] = ['Roboto-Medium.ttf', 'RobotoCondensed-Bold.ttf']
+
   app.pods do
     dependency 'JSONKit'
 
