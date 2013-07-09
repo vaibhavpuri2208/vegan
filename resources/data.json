@@ -2,7 +2,7 @@
   {
   "cafe":[
   {"name":"Café 1","description":"Description 1", "address":"Tschaikowskistraße 13,Berlin 13156", "phone":"+34-695 472 166"},
-  {"name":"Cafe of the world","description":"This is a take-away coffee place as there are only a few spots to stand inside. I tried a coffee there today and it was really really nice. I think it was 'Coffee Crema'. ", "address":"Corazón de María 4, Madrid 28002", "phone":"+34-695 472 166"},
+  {"name":"Cafe of the world","description":"This is a take-away coffee place as there are only a few spots to stand inside. I tried a coffee there today and it was really really nice.", "address":"Corazón de María 4, Madrid 28002", "phone":"+34-695 472 166"},
   {"name":"Café 3","description":"Description 3", "address":"Madrid", "phone":"+34-695 472 166"},
   {"name":"Café 4","description":"Description 4", "address":"Stoclkholm", "phone":"+34-695 472 166"},
   {"name":"Café 5","description":"Description 5", "address":"Singapore", "phone":"+34-695 472 166"},

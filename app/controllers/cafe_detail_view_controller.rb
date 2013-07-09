@@ -60,22 +60,6 @@ class CafeDetailViewController < UIViewController
     myScrollView.addSubview textField
 
 
-    #Phone Row
-    yCordinate = yCordinate + self.class.LABEL_HEIGHT
-    xCordinate =  self.class.X_LEFT_POSITION+ self.class.ICON_WIDTH+self.class.TEXT_OFFSET
-
-    iconView = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/icon-phone-2x.png') )
-    iconView.frame =  CGRectMake(self.class.X_LEFT_POSITION-self.class.ICON_WIDTH/4, yCordinate+(self.class.LABEL_HEIGHT-self.class.ICON_HEIGHT)/2, self.class.ICON_WIDTH, self.class.ICON_HEIGHT)
-    myScrollView.addSubview iconView
-
-    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT, true
-    myScrollView.addSubview backgroundView
-
-    textField = drawText xCordinate ,yCordinate, :phone, self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
-    myScrollView.addSubview textField
-
-
-
     #Description Row
     yCordinate = yCordinate + self.class.LABEL_HEIGHT
     backgroundView = drawBackground yCordinate, self.class.LABEL_HEIGHT,false
@@ -90,13 +74,86 @@ class CafeDetailViewController < UIViewController
     myScrollView.addSubview textField
 
     yCordinate = yCordinate + self.class.LABEL_HEIGHT# - self.class.GAP_CLOSER
-    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT*2, false
+    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT*1, false
     myScrollView.addSubview backgroundView
-    textField = drawText xCordinate, yCordinate-self.class.GAP_CLOSER, :description,self.class.LABEL_HEIGHT*2, "Roboto-Medium", 12.0
-    textField.lineBreakMode = NSLineBreakByWordWrapping;
-    textField.numberOfLines = 0;
+    textField = drawText xCordinate, yCordinate-self.class.GAP_CLOSER, :description,self.class.LABEL_HEIGHT*1, "Roboto-Medium", 12.0
+    textField.lineBreakMode = NSLineBreakByWordWrapping
+    textField.numberOfLines = 0
+    textField.sizeToFit
     myScrollView.addSubview textField
-    yCordinate += self.class.LABEL_HEIGHT 
+    #yCordinate += self.class.LABEL_HEIGHT 
+
+
+    
+    #Timings Row
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT
+    xCordinate =  self.class.X_LEFT_POSITION+ self.class.ICON_WIDTH+self.class.TEXT_OFFSET
+    incrementy = 20
+    incrementx = 100
+    iconView = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/icon-time-2x.png') )
+    iconView.frame =  CGRectMake(self.class.X_LEFT_POSITION-self.class.ICON_WIDTH/4, yCordinate+(self.class.LABEL_HEIGHT-self.class.ICON_HEIGHT)/2, self.class.ICON_WIDTH, self.class.ICON_HEIGHT)
+    myScrollView.addSubview iconView
+
+    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT+incrementy, true
+    myScrollView.addSubview backgroundView
+
+
+    textField1 = drawText xCordinate ,yCordinate, "Mon-Fr", self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
+    textField2 = drawText xCordinate +incrementx ,yCordinate, "Sat", self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
+    textField3 = drawText xCordinate +incrementx*2,yCordinate, "Sun", self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
+
+    myScrollView.addSubview textField1 
+    myScrollView.addSubview textField2
+    myScrollView.addSubview textField3
+
+
+    textField1 = drawText xCordinate ,yCordinate +incrementy, "1000 - 2400", self.class.LABEL_HEIGHT,"Roboto-Medium", 12.0
+    textField2 = drawText xCordinate +incrementx ,yCordinate+incrementy, "1400 - 2400", self.class.LABEL_HEIGHT,"Roboto-Medium", 12.0
+    textField3 = drawText xCordinate +incrementx*2,yCordinate+incrementy, "Closed", self.class.LABEL_HEIGHT,"Roboto-Medium", 12.0
+
+    myScrollView.addSubview textField1 
+    myScrollView.addSubview textField2
+    myScrollView.addSubview textField3
+
+
+
+
+    #Phone Row
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT + incrementy
+    increment = 0
+    xCordinate =  self.class.X_LEFT_POSITION+ self.class.ICON_WIDTH+self.class.TEXT_OFFSET
+
+    iconView = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/icon-phone-2x.png') )
+    iconView.frame =  CGRectMake(self.class.X_LEFT_POSITION-self.class.ICON_WIDTH/4, yCordinate+(self.class.LABEL_HEIGHT-self.class.ICON_HEIGHT)/2, self.class.ICON_WIDTH, self.class.ICON_HEIGHT)
+    myScrollView.addSubview iconView
+
+    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT, false
+    myScrollView.addSubview backgroundView
+
+    textField = drawText xCordinate ,yCordinate, :phone, self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
+    myScrollView.addSubview textField
+
+    
+    #Pictures Scroll Bar Row
+    yCordinate = yCordinate + self.class.LABEL_HEIGHT 
+    increment = 0
+    xCordinate =  self.class.X_LEFT_POSITION+ self.class.ICON_WIDTH+self.class.TEXT_OFFSET
+
+    iconView = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/icon-no_picture-2x.png') )
+    iconView.frame =  CGRectMake(self.class.X_LEFT_POSITION-self.class.ICON_WIDTH/4, yCordinate+(self.class.LABEL_HEIGHT-self.class.ICON_HEIGHT)/2, self.class.ICON_WIDTH, self.class.ICON_HEIGHT)
+    myScrollView.addSubview iconView
+
+    backgroundView = drawBackground yCordinate,self.class.LABEL_HEIGHT*2, true
+    myScrollView.addSubview backgroundView
+
+    textField = drawText xCordinate ,yCordinate, "Pictures", self.class.LABEL_HEIGHT,"RobotoCondensed-Bold", 16.0
+    myScrollView.addSubview textField
+
+
+    yCordinate = yCordinate#+ self.class.LABEL_HEIGHT
+    pictureSubView = setupPicScroll xCordinate, yCordinate
+    myScrollView.addSubview pictureSubView
+   # pictureSubView.release
 
 
 
@@ -111,6 +168,39 @@ class CafeDetailViewController < UIViewController
 
 
   end
+
+  def setupPicScroll xCordinate, yCordinate
+    picScroll = UIScrollView.alloc.initWithFrame(CGRectMake(0,self.class.LABEL_HEIGHT,UIScreen.mainScreen.bounds.size.width, self.class.LABEL_HEIGHT ))  
+    picScroll.delegate = self
+
+    picScroll.backgroundColor = UIColor.clearColor
+
+    #picScroll.setCanCancelContentTouches = false
+    picScroll.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+    picScroll.clipsToBounds = false
+    picScroll.scrollEnabled = true
+    picScroll.pagingEnabled = true
+    picScroll.contentSize =  CGSizeMake(90,self.class.LABEL_HEIGHT)
+
+
+    firstImage = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/cafe1.jpg') )
+
+    firstImage.frame =  CGRectMake(xCordinate,yCordinate,30, self.class.LABEL_HEIGHT )
+
+
+    secondImage = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/cafe1.jpg') )
+    secondImage.frame =  CGRectMake(xCordinate+40,yCordinate,30, self.class.LABEL_HEIGHT )
+
+    thirdImage = UIImageView.alloc.initWithImage( UIImage.imageNamed('interface_elements/cafe1.jpg') )
+    thirdImage.frame =  CGRectMake(xCordinate+80,yCordinate,30, self.class.LABEL_HEIGHT )
+
+
+    picScroll.addSubview firstImage
+    picScroll.addSubview secondImage
+    picScroll.addSubview thirdImage
+    picScroll
+  end
+
 
 
   def drawText xPosition, yPosition, attribute_name, labelHeight, fontName, fontSize
@@ -129,10 +219,11 @@ class CafeDetailViewController < UIViewController
   end
 
   def drawBackground yPosition,labelHeight, borderBOOL
-    surroundingLayer = UILabel.alloc.initWithFrame(CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+2, labelHeight))
+    surroundingLayer = UILabel.alloc.initWithFrame(CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+10, labelHeight))
     surroundingLayer.backgroundColor = UIColor.colorWithRed(242.0/255.0, green:236.0/255.0, blue:209.0/255.0, alpha:0.5)
     if borderBOOL
       surroundingLayer.layer.borderColor = UIColor.colorWithRed(160.0/255.0, green:152.0/255.0, blue:120.0/255.0, alpha:0.5).CGColor
+      #surroundingLayer.frame =CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+10, labelHeight)
     else
       surroundingLayer.layer.borderColor = UIColor.clearColor.CGColor
     end

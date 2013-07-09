@@ -23,17 +23,39 @@ class AppDelegate
   def readJSON
 
 
-    # Get the path of our JSON File inside the bundle
-    data_file  = NSBundle.mainBundle.pathForResource('data', ofType:'json')
+    
+    url =NSURL.URLWithString 'http://localhost:3000/places.json'
+    request =    NSMutableURLRequest.requestWithURL(url)
+    request.setTimeoutInterval 30
+    request.setHTTPMethod("GET") 
+    
+    queque = NSOperationQueue.alloc.init
+    @data =NSData.new
+    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
+      completionHandler: lambda do |response, data, error|
+      @data = data  
+          puts @data.class
+          puts @data
+      end
+      )
 
+    error_pointer = Pointer.new(:object)    
+
+
+=begin
+
+    #data_file = NSBundle.bundleWithURL(NSURL.URLWithString url)
     # For us to load the file, we need to pass a pointer. So if something goes wrong we can print
     # the error
-    error_pointer = Pointer.new(:object)
+
+    
+    #Get the path of our JSON File inside the bundle
+    data_file  = NSBundle.mainBundle.pathForResource('data', ofType:'json')
 
     # Lets load the file into a NSData
     data = NSData.alloc.initWithContentsOfFile(data_file,options:NSDataReadingUncached,error:error_pointer)
 
-    unless data
+    unless @data
 
      if error_pointer[0].code == NSFileReadNoSuchFileError
 
@@ -46,22 +68,20 @@ class AppDelegate
       end
       return nil
     end
+=end
 
 
   # Serialize the NSData into something we can work with, in this case a Hash
   
-    json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
+    json_data = NSJSONSerialization.JSONObjectWithData(@data, options: NSDataReadingUncached, error: error_pointer)
 
     unless json_data
 
-      $stderr.puts "Error: #{error_pointer[0].description}"
+      #$stderr.puts "Error: #{error_pointer[0].description}"
 
       return nil
     end
-
-
     json_data
-  
 
   end
 
