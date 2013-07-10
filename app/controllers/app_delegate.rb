@@ -47,6 +47,8 @@ class AppDelegate
 
                                               end
 
+                                              #self.tableView.reloadData
+                                              self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
 
                                             end
     )

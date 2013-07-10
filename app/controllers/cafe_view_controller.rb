@@ -16,7 +16,7 @@ class CafeTableViewController < UITableViewController
     theimage = loadImage("cafe")
     tab_bar_item = UITabBarItem.alloc.initWithTitle(nil,image:UIImage.imageNamed(theimage),tag:1)
     self.tabBarItem = tab_bar_item
-    #UIApplication.sharedApplication.delegate.readJSONtrial
+   # UIApplication.sharedApplication.delegate.readJSONtrial
     url =NSURL.URLWithString 'http://localhost:3000/places.json'
     request =    NSMutableURLRequest.requestWithURL(url)
     request.setTimeoutInterval 30
@@ -49,7 +49,6 @@ class CafeTableViewController < UITableViewController
 
                                             end
     )
-
 
     end
 
