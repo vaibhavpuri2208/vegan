@@ -16,39 +16,23 @@ class CafeTableViewController < UITableViewController
     theimage = loadImage("cafe")
     tab_bar_item = UITabBarItem.alloc.initWithTitle(nil,image:UIImage.imageNamed(theimage),tag:1)
     self.tabBarItem = tab_bar_item
-   # UIApplication.sharedApplication.delegate.readJSONtrial
-    url =NSURL.URLWithString 'http://localhost:3000/places.json'
-    request =    NSMutableURLRequest.requestWithURL(url)
-    request.setTimeoutInterval 30
-    request.setHTTPMethod("GET")
-    request.setCachePolicy NSURLRequestUseProtocolCachePolicy
 
-    queque = NSOperationQueue.alloc.init
-    @data =NSData.new
-    @cafe = Array.new
+    data_filter_proc = Proc.new do |json_data|
+      some_array= Array.new
 
-    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
-                                            completionHandler: lambda do |response, data, error|
+      json_data.each do |place|
+            if place[:category_id] == 1
+              some_array << place
+            end
+      end
+      next some_array
+    end
 
 
-                                              error_pointer = Pointer.new(:object)
-                                              @json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
-                                              puts "JSON Class is" +@json_data.class.to_s
+    UIApplication.sharedApplication.delegate.readJSONtrial data_filter_proc
+    self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
 
-                                              @data = @json_data
 
-                                              @data.each do |place|
-                                                if place[:category_id] == 1
-                                                  @cafe << place
-                                                end
-
-                                              end
-
-                                            #self.tableView.reloadData
-                                            self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
-
-                                            end
-    )
 
     end
 
