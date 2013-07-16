@@ -21,31 +21,6 @@ class AppDelegate
   end
 
 
-  def readJSONtrial(block)
-    url =NSURL.URLWithString 'http://localhost:3000/places.json'
-    request =    NSMutableURLRequest.requestWithURL(url)
-    request.setTimeoutInterval 30
-    request.setHTTPMethod("GET")
-    request.setCachePolicy NSURLRequestUseProtocolCachePolicy
-
-    queque = NSOperationQueue.alloc.init
-
-    @data = Array.new
-    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
-                                            completionHandler: lambda do |response, data, error|
-
-
-                                              error_pointer = Pointer.new(:object)
-                                              json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
-                                              data = block.call(json_data)
-
-                                              puts data
-                                            end
-    )
-
-
-
-  end
 
 
   def readJSON

@@ -12,31 +12,85 @@ class CafeTableViewController < UITableViewController
     puts @cafe
   end
 
+
+
+
   def setupTabItem
     theimage = loadImage("cafe")
     tab_bar_item = UITabBarItem.alloc.initWithTitle(nil,image:UIImage.imageNamed(theimage),tag:1)
     self.tabBarItem = tab_bar_item
 
-    data_filter_proc = Proc.new do |json_data|
-      some_array= Array.new
 
-      json_data.each do |place|
-            if place[:category_id] == 1
-              some_array << place
-            end
-      end
-      next some_array
+
+    #UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
+    readJSONtrial
+    getLocation
+  end
+
+  def getLocation
+    if (CLLocationManager.locationServicesEnabled)
+      @locationManager = CLLocationManager.alloc.init
+      @locationManager.delegate = self
+      @locationManager.startMonitoringSignificantLocationChanges
+    else
+      puts "Please enable access to your Location in Settings"
+  end
+
+  def locationManager(manager, didUpdateLocations:locations)
+    @deviceRecentLocation = locations.last
+    puts(@deviceRecentLocation.coordinate.latitude)
+  end
+
+  def calculateDistance(startposition,endposition)
+    distance = CLLocationDistance.alloc.init
+    startposition.distanceFromLocation endposition
+  end
+
+  def getCoordinates address
+    url = 'http://maps.googleapis.com/maps/api/geocode/json?address=Berlin&sensor=false'
+    request = setupGETRequest url
+    queque = NSOperationQueue.alloc.init
+    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
+                                            completionHandler: lambda do |response, data, error|
+                                                puts data
+                                            end)
+
+
     end
 
+  def setupGETRequest url
+    url = NSURL.URLWithString
+    request = NSMutableURLRequest.requestWithURL(url)
+    request.setTimeoutInterval 30
+    request.setHTTPMethod("GET")
+    request.setCachePolicy NSURLRequestUseProtocolCachePolicy
+    request
+  end
 
-    UIApplication.sharedApplication.delegate.readJSONtrial data_filter_proc
-    self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
+
+  def readJSONtrial
+    request = self.setupGETRequest 'http://localhost:3000/places.json'
+    queque = NSOperationQueue.alloc.init
+    @cafe = Array.new
+    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
+                                            completionHandler: lambda do |response, data, error|
+                                              error_pointer = Pointer.new(:object)
+                                              json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
+                                             # @cafe= block.call(json_data)
+                                            json_data.each do |place|
+                                                if place[:category_id] == 1
+                                                  @cafe<< place
+                                                end
+                                              end
+                                              self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
+
+                                            end
+
+    )
 
 
 
-    end
-
-
+  end
 
   def loadImage imageName 
     imageNameNormal = "interface_elements/menu_bar-icon-" + imageName +".png"
