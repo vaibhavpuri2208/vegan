@@ -98,7 +98,7 @@ class RootViewController < UIViewController
      )    
   end
 
-
+=begin
   def get_json
 
     BubbleWrap::HTTP.get("http://localhost:3000/hackathons.json") do |response|
@@ -108,6 +108,7 @@ class RootViewController < UIViewController
     end
   
   end
+=end
 
 
 

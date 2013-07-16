@@ -9,8 +9,7 @@ class CafeTableViewController < UITableViewController
 
   def viewDidLoad
     setupTabItem
-    puts @cafe
-  end
+      end
 
 
 
@@ -24,21 +23,25 @@ class CafeTableViewController < UITableViewController
 
     #UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
     readJSONtrial
-    getLocation
+    startLocationTracking
+    getCoordinates "Berlin"
+    #puts @locationCordinates
   end
 
-  def getLocation
+  def startLocationTracking
     if (CLLocationManager.locationServicesEnabled)
       @locationManager = CLLocationManager.alloc.init
       @locationManager.delegate = self
       @locationManager.startMonitoringSignificantLocationChanges
     else
       puts "Please enable access to your Location in Settings"
+    end
   end
+
 
   def locationManager(manager, didUpdateLocations:locations)
     @deviceRecentLocation = locations.last
-    puts(@deviceRecentLocation.coordinate.latitude)
+    #puts(@deviceRecentLocation.coordinate.latitude)
   end
 
   def calculateDistance(startposition,endposition)
@@ -47,19 +50,22 @@ class CafeTableViewController < UITableViewController
   end
 
   def getCoordinates address
-    url = 'http://maps.googleapis.com/maps/api/geocode/json?address=Berlin&sensor=false'
+    url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{address}&sensor=false"
     request = setupGETRequest url
     queque = NSOperationQueue.alloc.init
-    NSURLConnection.sendAsynchronousRequest(request,queue: queque,
-                                            completionHandler: lambda do |response, data, error|
-                                                puts data
-                                            end)
+    error_pointer = Pointer.new(:object)
+    @locationCordinates = Hash.new
+    NSURLConnection.sendAsynchronousRequest(request,queue: queque, completionHandler: lambda do |response, data, error|
+      json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
 
+      @locationCordinates[:lat]= json_data[:results][0][:geometry][:location][:lat]
+      @locationCordinates[:lng]= json_data[:results][0][:geometry][:location][:lng]
+    end)
 
-    end
+   end
 
   def setupGETRequest url
-    url = NSURL.URLWithString
+    url = NSURL.URLWithString url
     request = NSMutableURLRequest.requestWithURL(url)
     request.setTimeoutInterval 30
     request.setHTTPMethod("GET")
@@ -112,8 +118,12 @@ class CafeTableViewController < UITableViewController
     cell = tableView.dequeueReusableCellWithIdentifier(CELL_REUSE_ID) || UITableViewCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier: CELL_REUSE_ID)
     cafe = @cafe[ indexPath.row ]
     cell.textLabel.text = cafe[:name]
-    puts "the Cafe name is" + cafe[:name].to_s
     cell.detailTextLabel.text = cafe[:description]
+    accView= UIView.alloc.initWithFrame CGRectMake(20, 0, 60, 44)
+    accLabel =UILabel.alloc.initWithFrame CGRectMake(0,0,60,35)
+    accLabel.text = "200m"
+    accView.addSubview accLabel
+    cell.accessoryView = accView
     theImage = UIImage.imageNamed('interface_elements/cafe1.jpg')
     cell.imageView.image = theImage;
 
