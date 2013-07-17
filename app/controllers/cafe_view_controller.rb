@@ -9,8 +9,8 @@ class CafeTableViewController < UITableViewController
 
   def viewDidLoad
     setupTabItem
-      end
 
+  end
 
 
 
@@ -24,7 +24,7 @@ class CafeTableViewController < UITableViewController
     #UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
     readJSONtrial
     startLocationTracking
-    getCoordinates "Berlin"
+    #getCoordinates "Berlin"
     #puts @locationCordinates
   end
 
@@ -45,7 +45,7 @@ class CafeTableViewController < UITableViewController
   end
 
   def calculateDistance(startposition,endposition)
-    distance = CLLocationDistance.alloc.init
+
     startposition.distanceFromLocation endposition
   end
 
@@ -60,6 +60,11 @@ class CafeTableViewController < UITableViewController
 
       @locationCordinates[:lat]= json_data[:results][0][:geometry][:location][:lat]
       @locationCordinates[:lng]= json_data[:results][0][:geometry][:location][:lng]
+      startPosition =@deviceRecentLocation
+      endPosition = CLLocation.alloc.initWithLatitude( @locationCordinates[:lat], longitude:@locationCordinates[:lng])
+      @distance = calculateDistance(startPosition,endPosition)
+
+
     end)
 
    end
@@ -77,7 +82,7 @@ class CafeTableViewController < UITableViewController
   def readJSONtrial
     request = self.setupGETRequest 'http://localhost:3000/places.json'
     queque = NSOperationQueue.alloc.init
-    @cafe = Array.new
+    @cafe = NSMutableArray.new
     NSURLConnection.sendAsynchronousRequest(request,queue: queque,
                                             completionHandler: lambda do |response, data, error|
                                               error_pointer = Pointer.new(:object)
@@ -85,7 +90,19 @@ class CafeTableViewController < UITableViewController
                                              # @cafe= block.call(json_data)
                                             json_data.each do |place|
                                                 if place[:category_id] == 1
-                                                  @cafe<< place
+                                                  address = NSMutableString.new
+                                                  address = place[:address]
+                                                  if address
+                                                    address = address.gsub(/\s/, '+')
+                                                   getCoordinates address
+
+                                                  end
+
+                                                  temp_place = place.mutableCopy
+                                                  temp_place[:distance] = distance
+                                                  puts distance
+                                                  @cafe<< temp_place
+                                                  #@cafe.last[:distance] = distance
                                                 end
                                               end
                                               self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
@@ -121,7 +138,10 @@ class CafeTableViewController < UITableViewController
     cell.detailTextLabel.text = cafe[:description]
     accView= UIView.alloc.initWithFrame CGRectMake(20, 0, 60, 44)
     accLabel =UILabel.alloc.initWithFrame CGRectMake(0,0,60,35)
-    accLabel.text = "200m"
+    #format the address to include the + sign
+
+
+    accLabel.text = "200m"   #getCoordinates "Madrid"
     accView.addSubview accLabel
     cell.accessoryView = accView
     theImage = UIImage.imageNamed('interface_elements/cafe1.jpg')
