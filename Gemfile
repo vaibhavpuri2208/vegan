@@ -1,3 +1,4 @@
+source 'https://rubygems.org'
 # gem "rails"
 gem "rubymotion_generators"
 #gem 'bubble-wrap', '~> 1.3.0.osx'

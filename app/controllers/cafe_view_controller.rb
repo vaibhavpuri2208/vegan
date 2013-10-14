@@ -21,7 +21,7 @@ class CafeTableViewController < UITableViewController
 
 
 
-    #UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
+    UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
     readJSONtrial
     startLocationTracking
     #getCoordinates "Berlin"

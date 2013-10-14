@@ -4,7 +4,7 @@ class RootViewController < UIViewController
 
     startScreen
     performSelector("addNewView", withObject:nil ,afterDelay:1)
-
+    mainScreen
   end
 
 
@@ -88,8 +88,8 @@ class RootViewController < UIViewController
       end,
       completion:
       lambda do |notification|
-         #@containerView.addSubview @launchView
-          #@containerView.bringSubviewToFront @launchView
+        # @containerView.addSubview @launchView
+         # @containerView.bringSubviewToFront @launchView
         #@button1.setUserInteractionEnabled(true)
         
       end
