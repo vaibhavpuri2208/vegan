@@ -12,6 +12,7 @@ Motion::Project::App.setup do |app|
   app.name = 'veganApp'
   app.frameworks = ['CoreLocation', 'MapKit','QuartzCore']  
   app.info_plist['UIAppFonts'] = ['Roboto-Medium.ttf', 'RobotoCondensed-Bold.ttf']
+  #app.sdk_version = "6.0"
 
   app.pods do
     dependency 'JSONKit'

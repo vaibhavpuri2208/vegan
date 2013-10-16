@@ -21,10 +21,10 @@ class CafeTableViewController < UITableViewController
 
 
 
-    UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc)
+   # UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc) 
     readJSONtrial
-    startLocationTracking
-    #getCoordinates "Berlin"
+    #startLocationTracking
+   # getCoordinates "Berlin"
     #puts @locationCordinates
   end
 
@@ -41,7 +41,7 @@ class CafeTableViewController < UITableViewController
 
   def locationManager(manager, didUpdateLocations:locations)
     @deviceRecentLocation = locations.last
-    #puts(@deviceRecentLocation.coordinate.latitude)
+    puts(@deviceRecentLocation.coordinate.latitude)
   end
 
   def calculateDistance(startposition,endposition)
@@ -84,11 +84,14 @@ class CafeTableViewController < UITableViewController
     queque = NSOperationQueue.alloc.init
     @cafe = NSMutableArray.new
     NSURLConnection.sendAsynchronousRequest(request,queue: queque,
-                                            completionHandler: lambda do |response, data, error|
-                                              error_pointer = Pointer.new(:object)
+                                            completionHandler: lambda do |response, data, error|                                              error_pointer = Pointer.new(:object)
+
                                               json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
                                              # @cafe= block.call(json_data)
-                                            json_data.each do |place|
+
+                                              puts json_data
+=begin
+                                              json_data.each do |place|
                                                 if place[:category_id] == 1
                                                   address = NSMutableString.new
                                                   address = place[:address]
@@ -105,6 +108,7 @@ class CafeTableViewController < UITableViewController
                                                   #@cafe.last[:distance] = distance
                                                 end
                                               end
+=end
                                               self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
 
                                             end

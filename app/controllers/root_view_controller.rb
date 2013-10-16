@@ -27,7 +27,7 @@ class RootViewController < UIViewController
 
   def addLabelsToMainScreen
 
-    
+
     #logo = UILabel.alloc.initWithFrame(CGRectMake(10,50,300,100))
     #logo.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/logo.png")); 
     #elf.view.addSubview logo
