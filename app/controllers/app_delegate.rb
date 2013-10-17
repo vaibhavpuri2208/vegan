@@ -2,9 +2,11 @@ class AppDelegate
 
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+   startLocationTracking
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     @window.rootViewController = RootViewController.alloc.init
     @window.makeKeyAndVisible
+   
     true
   end
 
@@ -20,6 +22,22 @@ class AppDelegate
     @window.rootViewController = tab_bar_controller
   end
 
+def startLocationTracking
+    if (CLLocationManager.locationServicesEnabled)
+      @locationManager = CLLocationManager.alloc.init
+      @locationManager.delegate = self
+      @locationManager.startUpdatingLocation
+      #@locationManager.startMonitoringSignificantLocationChanges
+      puts @locationManager.location
+    else
+      puts "Please enable access to your Location in Settings"
+    end
+  end
+
+
+  def locationManager(manager, didUpdateLocations:locations)
+    @deviceRecentLocation = locations.last
+  end
 
 
 

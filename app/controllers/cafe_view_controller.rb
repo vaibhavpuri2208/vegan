@@ -3,36 +3,33 @@ class CafeTableViewController < UITableViewController
 
   def initWithStyle(style)
     super
-    self.title = "Vegan Cafés & Bars"
+    self.title = "Vegan Cafés"
+    #startLocationTracking
+    readJSONtrial
     self
   end
 
   def viewDidLoad
-    setupTabItem
-
+    setupTabItem #Setup of Tab Icon and view
+     
   end
 
 
 
   def setupTabItem
-    theimage = loadImage("cafe")
+    theimage = loadImage("cafe") 
     tab_bar_item = UITabBarItem.alloc.initWithTitle(nil,image:UIImage.imageNamed(theimage),tag:1)
-    self.tabBarItem = tab_bar_item
-
-
-
-   # UIApplication.sharedApplication.delegate.readJSONtrial(data_filter_proc) 
-    readJSONtrial
-    #startLocationTracking
-   # getCoordinates "Berlin"
+    self.tabBarItem = tab_bar_item    
+   # getCoordinates "Barcelona" 
     #puts @locationCordinates
   end
-
+=begin
   def startLocationTracking
     if (CLLocationManager.locationServicesEnabled)
       @locationManager = CLLocationManager.alloc.init
       @locationManager.delegate = self
-      @locationManager.startMonitoringSignificantLocationChanges
+      @locationManager.startUpdatingLocation
+      #@locationManager.startMonitoringSignificantLocationChanges
     else
       puts "Please enable access to your Location in Settings"
     end
@@ -41,16 +38,20 @@ class CafeTableViewController < UITableViewController
 
   def locationManager(manager, didUpdateLocations:locations)
     @deviceRecentLocation = locations.last
-    puts(@deviceRecentLocation.coordinate.latitude)
+
   end
+=end
+ 
 
-  def calculateDistance(startposition,endposition)
-
+  def calculateDistance(startposition,endposition) 
     startposition.distanceFromLocation endposition
   end
 
   def getCoordinates address
+    puts address
+    address ="Berlin"
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{address}&sensor=false"
+
     request = setupGETRequest url
     queque = NSOperationQueue.alloc.init
     error_pointer = Pointer.new(:object)
@@ -60,13 +61,13 @@ class CafeTableViewController < UITableViewController
 
       @locationCordinates[:lat]= json_data[:results][0][:geometry][:location][:lat]
       @locationCordinates[:lng]= json_data[:results][0][:geometry][:location][:lng]
-      startPosition =@deviceRecentLocation
+      @deviceRecentLocation =  UIApplication.sharedApplication.delegate.instance_variable_get(:@deviceRecentLocation)
+      puts @deviceRecentLocation
       endPosition = CLLocation.alloc.initWithLatitude( @locationCordinates[:lat], longitude:@locationCordinates[:lng])
-      @distance = calculateDistance(startPosition,endPosition)
-
+      @distance = calculateDistance(@deviceRecentLocation,endPosition)
 
     end)
-
+       @distance 
    end
 
   def setupGETRequest url
@@ -140,9 +141,9 @@ class CafeTableViewController < UITableViewController
     accView= UIView.alloc.initWithFrame CGRectMake(20, 0, 60, 44)
     accLabel =UILabel.alloc.initWithFrame CGRectMake(0,0,60,35)
     #format the address to include the + sign
-
-
-    accLabel.text = "200m"   #getCoordinates "Madrid"
+    distance_to_display = getCoordinates(cafe[:address].to_s) 
+    accLabel.text = distance_to_display.to_s
+    puts distance_to_display.to_s
     accView.addSubview accLabel
     cell.accessoryView = accView
     theImage = UIImage.imageNamed('interface_elements/cafe1.jpg')

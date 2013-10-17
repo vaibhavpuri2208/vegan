@@ -43,7 +43,6 @@ class RootViewController < UIViewController
     button = UIButton.buttonWithType(UIButtonTypeSystem)
     button.frame = CGRectMake(xPosition,yPosition,xImageSize,yImageSize)
     theimage=loadImageWithState('cafe')
-    puts theimage
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadCafes', forControlEvents:UIControlEventTouchUpInside)
     button.setUserInteractionEnabled true

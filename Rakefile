@@ -5,7 +5,7 @@ require 'bundler'
 require 'rubygems'
 #require 'motion-cocoapods'
 
-Bundler.require
+ Bundler.require
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
