@@ -49,7 +49,7 @@ class CafeTableViewController < UITableViewController
 
   def getCoordinates address
     puts address
-    address ="Berlin"
+  #  address ="Berlin"
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{address}&sensor=false"
 
     request = setupGETRequest url
@@ -62,7 +62,6 @@ class CafeTableViewController < UITableViewController
       @locationCordinates[:lat]= json_data[:results][0][:geometry][:location][:lat]
       @locationCordinates[:lng]= json_data[:results][0][:geometry][:location][:lng]
       @deviceRecentLocation =  UIApplication.sharedApplication.delegate.instance_variable_get(:@deviceRecentLocation)
-      puts @deviceRecentLocation
       endPosition = CLLocation.alloc.initWithLatitude( @locationCordinates[:lat], longitude:@locationCordinates[:lng])
       @distance = calculateDistance(@deviceRecentLocation,endPosition)
 
