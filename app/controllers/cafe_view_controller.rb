@@ -88,27 +88,24 @@ class CafeTableViewController < UITableViewController
 
                                               json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
                                              # @cafe= block.call(json_data)
-
-                                              puts json_data
-=begin
+                                              
                                               json_data.each do |place|
                                                 if place[:category_id] == 1
                                                   address = NSMutableString.new
                                                   address = place[:address]
                                                   if address
                                                     address = address.gsub(/\s/, '+')
-                                                   getCoordinates address
+                                                   #getCoordinates address
 
                                                   end
 
                                                   temp_place = place.mutableCopy
-                                                  temp_place[:distance] = distance
-                                                  puts distance
+                                                  #temp_place[:distance] = distance
+                                                  #puts distance
                                                   @cafe<< temp_place
                                                   #@cafe.last[:distance] = distance
                                                 end
                                               end
-=end
                                               self.tableView.performSelectorOnMainThread(:reloadData, withObject:nil, waitUntilDone:false)
 
                                             end

@@ -221,6 +221,7 @@ class CafeDetailViewController < UIViewController
   def drawBackground yPosition,labelHeight, borderBOOL
     surroundingLayer = UILabel.alloc.initWithFrame(CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+10, labelHeight))
     surroundingLayer.backgroundColor = UIColor.colorWithRed(242.0/255.0, green:236.0/255.0, blue:209.0/255.0, alpha:0.5)
+    surroundingLayer.backgroundColor = UIColor.clearColor #over-riding the brownish color
     if borderBOOL
       surroundingLayer.layer.borderColor = UIColor.colorWithRed(160.0/255.0, green:152.0/255.0, blue:120.0/255.0, alpha:0.5).CGColor
       #surroundingLayer.frame =CGRectMake(-1,yPosition*1.0, UIScreen.mainScreen.bounds.size.width+10, labelHeight)

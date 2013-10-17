@@ -19,7 +19,8 @@ class RootViewController < UIViewController
 
   def mainScreen
    
-    self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-main-menu.png"))
+  self.view.backgroundColor = UIColor.colorWithPatternImage(UIImage.imageNamed("interface_elements/bg-main-menu.png"))
+  #  self.view.backgroundColor = UIColor.whiteColor
     addLabelsToMainScreen    
 
   end
@@ -39,9 +40,10 @@ class RootViewController < UIViewController
     xImageSize = 90
     yImageSize = 55
 
-    button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    button = UIButton.buttonWithType(UIButtonTypeSystem)
     button.frame = CGRectMake(xPosition,yPosition,xImageSize,yImageSize)
-    theimage=loadImageWithState('cafes')
+    theimage=loadImageWithState('cafe')
+    puts theimage
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadCafes', forControlEvents:UIControlEventTouchUpInside)
     button.setUserInteractionEnabled true
@@ -50,7 +52,7 @@ class RootViewController < UIViewController
 
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(xPosition*2+xImageSize*1.25,yPosition,xImageSize,yImageSize)
-    theimage=loadImageWithState('restaurants')
+    theimage=loadImageWithState('restaurant')
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadRestaurants', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
@@ -58,7 +60,7 @@ class RootViewController < UIViewController
 
     button = UIButton.buttonWithType(UIButtonTypeCustom)
     button.frame = CGRectMake(xPosition,yPosition*1.4+yImageSize*1.2,xImageSize,yImageSize)
-    theimage=loadImageWithState('groceries')
+    theimage=loadImageWithState('grocery')
     button.setBackgroundImage(UIImage.imageNamed(theimage),forState:UIControlStateNormal)
     button.addTarget(self, action:'loadGroceries', forControlEvents:UIControlEventTouchUpInside)
     self.view.addSubview button
