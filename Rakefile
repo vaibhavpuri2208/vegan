@@ -3,7 +3,6 @@ $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project/template/ios'
 require 'bundler'
 require 'rubygems'
-require 'open-uri'
 #require 'motion-cocoapods'
 
  Bundler.require
@@ -20,3 +19,5 @@ Motion::Project::App.setup do |app|
 
   end
 end
+
+  MotionBundler.setup

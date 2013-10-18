@@ -1,4 +1,4 @@
-#require 'open-uri'
+require 'open-uri'
 
 class CafeTableViewController < UITableViewController
   CELL_REUSE_ID = "SomeCafeId"
@@ -33,10 +33,8 @@ class CafeTableViewController < UITableViewController
   end
 
   def getCoordinates address
-    puts address
   #  address ="Berlin"
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{address}&sensor=false"
-    url = URI::encode url
     request = setupGETRequest url
     queque = NSOperationQueue.alloc.init
     error_pointer = Pointer.new(:object)
@@ -48,14 +46,20 @@ class CafeTableViewController < UITableViewController
       @deviceRecentLocation =  UIApplication.sharedApplication.delegate.instance_variable_get(:@deviceRecentLocation)
       endPosition = CLLocation.alloc.initWithLatitude( @locationCordinates[:lat], longitude:@locationCordinates[:lng])
       @distance = calculateDistance(@deviceRecentLocation,endPosition)
-
+      puts @distance
     end)
        @distance 
    end
 
   def setupGETRequest url
-    url = NSURL.URLWithString url
-    request = NSMutableURLRequest.requestWithURL(url)
+    if !url.include? "localhost"
+      url_encoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+   else
+      url_encoded = url  
+    end
+    url_object = NSURL.URLWithString url_encoded
+    puts "For the URL: " + url_encoded
+    request = NSMutableURLRequest.requestWithURL(url_object)
     request.setTimeoutInterval 30
     request.setHTTPMethod("GET")
     request.setCachePolicy NSURLRequestUseProtocolCachePolicy
@@ -123,10 +127,8 @@ class CafeTableViewController < UITableViewController
     cell.detailTextLabel.text = cafe[:description]
     accView= UIView.alloc.initWithFrame CGRectMake(20, 0, 60, 44)
     accLabel =UILabel.alloc.initWithFrame CGRectMake(0,0,60,35)
-    #format the address to include the + sign
-    distance_to_display = getCoordinates(cafe[:address].to_s) 
-    accLabel.text = distance_to_display.to_s
-    puts distance_to_display.to_s
+    distance_to_display = getCoordinates(cafe[:address]) 
+    accLabel.text = (distance_to_display/1000).ceil.to_s + "Km" if distance_to_display
     accView.addSubview accLabel
     cell.accessoryView = accView
     theImage = UIImage.imageNamed('interface_elements/cafe1.jpg')
@@ -136,7 +138,6 @@ class CafeTableViewController < UITableViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
-    p "row #{indexPath.row} selected"
     cafe_selected = @cafe[indexPath.row]
 
     @cafe_detail_controller = self.initWithData cafe_selected
