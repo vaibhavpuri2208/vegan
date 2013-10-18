@@ -1,3 +1,5 @@
+#require 'open-uri'
+
 class CafeTableViewController < UITableViewController
   CELL_REUSE_ID = "SomeCafeId"
 
@@ -34,14 +36,13 @@ class CafeTableViewController < UITableViewController
     puts address
   #  address ="Berlin"
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{address}&sensor=false"
-
+    url = URI::encode url
     request = setupGETRequest url
     queque = NSOperationQueue.alloc.init
     error_pointer = Pointer.new(:object)
     @locationCordinates = Hash.new
     NSURLConnection.sendAsynchronousRequest(request,queue: queque, completionHandler: lambda do |response, data, error|
       json_data = NSJSONSerialization.JSONObjectWithData(data, options: NSDataReadingUncached, error: error_pointer)
-
       @locationCordinates[:lat]= json_data[:results][0][:geometry][:location][:lat]
       @locationCordinates[:lng]= json_data[:results][0][:geometry][:location][:lng]
       @deviceRecentLocation =  UIApplication.sharedApplication.delegate.instance_variable_get(:@deviceRecentLocation)
