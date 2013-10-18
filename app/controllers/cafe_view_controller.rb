@@ -23,24 +23,7 @@ class CafeTableViewController < UITableViewController
    # getCoordinates "Barcelona" 
     #puts @locationCordinates
   end
-=begin
-  def startLocationTracking
-    if (CLLocationManager.locationServicesEnabled)
-      @locationManager = CLLocationManager.alloc.init
-      @locationManager.delegate = self
-      @locationManager.startUpdatingLocation
-      #@locationManager.startMonitoringSignificantLocationChanges
-    else
-      puts "Please enable access to your Location in Settings"
-    end
-  end
 
-
-  def locationManager(manager, didUpdateLocations:locations)
-    @deviceRecentLocation = locations.last
-
-  end
-=end
  
 
   def calculateDistance(startposition,endposition) 
